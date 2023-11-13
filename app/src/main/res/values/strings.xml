@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">KolesaUpgrade</string>
+    <string name="main_activity_tv">Your name</string>
+    <string name="main_activity_et">Write your name here</string>
+    <string name="main_activity_btn">Continue</string>
+    <string name="hello_activity_tv">Hello</string>
 </resources>
