@@ -3,5 +3,10 @@
     <string name="main_activity_tv">Your name</string>
     <string name="main_activity_et">Write your name here</string>
     <string name="main_activity_btn">Continue</string>
-    <string name="hello_activity_tv">Hello</string>
+    <string name="hello_activity_tv_name">Hello %1s</string>
+    <string name="hello_activity_tv_email">Your email is: %1s</string>
+    <string name="main_activity_tv_name">Name</string>
+    <string name="main_activity_tv_email">Email</string>
+    <string name="main_activity_hint_name">Write your name</string>
+    <string name="main_activity_hint_email">Write your email</string>
 </resources>

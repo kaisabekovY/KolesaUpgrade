@@ -4,36 +4,40 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import kz.app.kolesaupgrade.Constants.APPLICATION_SHARED_KEY
 import kz.app.kolesaupgrade.Constants.APPLICATION_SHARED_PREFERENCES
+import kz.app.kolesaupgrade.Constants.EMAIL_KEY
+import kz.app.kolesaupgrade.Constants.USER_KEY
 import kz.app.kolesaupgrade.R
+import kz.app.kolesaupgrade.databinding.ActivityHelloBinding
 
 class HelloActivity : AppCompatActivity() {
 
-    private lateinit var tvName: TextView
+    private lateinit var binding: ActivityHelloBinding
     private lateinit var sharedPreferences: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hello)
+        binding = ActivityHelloBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initShared()
-        initViews()
 
-        val userName: String = getSavedUserName()
+        val userName: String? = getSavedUserName()
+        val userEmail: String? = getSavedEmail()
 
-        tvName.text = userName
-    }
-
-    private fun initViews() {
-        tvName = findViewById(R.id.tv_hello_activity)
+        binding.tvHelloActivityName.text = getString(R.string.hello_activity_tv_name, userName)
+        binding.tvHelloActivityEmail.text = getString(R.string.hello_activity_tv_email, userEmail)
     }
 
     private fun initShared() {
         sharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES,Context.MODE_PRIVATE)
     }
 
-    private fun getSavedUserName(): String{
-        return sharedPreferences.getString(APPLICATION_SHARED_KEY,"World!") ?: "World!"
+    private fun getSavedUserName(): String? {
+        return sharedPreferences.getString(USER_KEY, null)
+    }
+
+    private fun getSavedEmail(): String? {
+        return sharedPreferences.getString(EMAIL_KEY, null)
     }
 }

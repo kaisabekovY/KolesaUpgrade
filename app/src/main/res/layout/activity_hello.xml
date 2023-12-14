@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".hello.presentation.HelloActivity">
     <TextView
-        android:id="@+id/tv_hello_activity"
+        android:id="@+id/tv_hello_activity_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/hello_activity_tv"
+        android:text="@string/hello_activity_tv_name"
         android:textSize="24sp"/>
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_hello_activity_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/hello_activity_tv_email" />
+</LinearLayout>

@@ -5,42 +5,49 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import kz.app.kolesaupgrade.Constants.APPLICATION_SHARED_KEY
 import kz.app.kolesaupgrade.Constants.APPLICATION_SHARED_PREFERENCES
+import kz.app.kolesaupgrade.Constants.EMAIL_KEY
+import kz.app.kolesaupgrade.Constants.USER_KEY
+import kz.app.kolesaupgrade.databinding.ActivityMainBinding
 import kz.app.kolesaupgrade.hello.presentation.HelloActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var saveButton: Button
-    private lateinit var etName: EditText
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        checkExistingData()
+        setupViews()
         initShared()
-        initViews()
         setupListeners()
     }
 
+    private fun saveData() {
+        saveUserName(binding.tvGreetingName.etContent.text.toString())
+        saveUserEmail(binding.tvGreetingEmail.etContent.text.toString())
+    }
+
     private fun saveUserName(userName: String) {
-        editor.putString(APPLICATION_SHARED_KEY, userName)
+        editor.putString(USER_KEY, userName)
         editor.apply()
     }
 
-    private fun initViews() {
-        saveButton = findViewById(R.id.btn_save_user)
-        etName = findViewById(R.id.et_user_name)
+    private fun saveUserEmail(email: String) {
+        editor.putString(EMAIL_KEY, email)
+        editor.apply()
     }
 
     private fun setupListeners() {
-        saveButton.setOnClickListener {
+        binding.btnSaveUser.setOnClickListener {
+            saveData()
             navigateToHelloActivity()
-            saveUserName(etName.text.toString())
         }
     }
 
@@ -55,5 +62,30 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToHelloActivity() {
         val toHelloActivityIntent = Intent(this, HelloActivity::class.java)
         startActivity(toHelloActivityIntent)
+    }
+
+    private fun isUserNameSaved(): Boolean {
+        val sharedPreferences = getSharedPreferences(
+            APPLICATION_SHARED_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+
+        return sharedPreferences.contains(USER_KEY)
+    }
+
+    private fun setupViews() {
+        binding.tvGreetingName.tvContent.text = resources.getString(R.string.main_activity_tv_name)
+        binding.tvGreetingName.etContent.hint = resources.getString(R.string.main_activity_hint_name)
+        binding.tvGreetingEmail.tvContent.text = resources.getString(R.string.main_activity_tv_email)
+        binding.tvGreetingEmail.etContent.hint = resources.getString(R.string.main_activity_hint_email)
+    }
+
+    private fun checkExistingData() {
+        if(isUserNameSaved()) {
+            navigateToHelloActivity()
+            finish()
+
+            return
+        }
     }
 }
